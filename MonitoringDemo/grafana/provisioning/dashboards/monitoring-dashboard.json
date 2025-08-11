@@ -1,0 +1,214 @@
+{
+  "id": null,
+  "uid": "monitoringdemo",
+  "title": "MonitoringDemo Overview",
+  "tags": [ "monitoring" ],
+  "timezone": "browser",
+  "schemaVersion": 36,
+  "version": 2,
+  "refresh": "5s",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "App Uptime",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "up{job=\"monitoringdemo\"}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "logs",
+      "title": "App Logs",
+      "datasource": "Loki",
+      "targets": [
+        {
+          "expr": "{container=\"monitoringdemo\"}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "options": {
+        "showLabels": true,
+        "showTime": true,
+        "wrapLogMessages": false
+      }
+    },
+    {
+      "type": "graph",
+      "title": "Request Rate",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "rate(http_requests_total{job=\"monitoringdemo\"}[1m])",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 12
+      },
+      "options": {
+        "legend": { "displayMode": "list" },
+        "tooltip": { "mode": "single" }
+      },
+      "lines": true,
+      "fill": 1,
+      "linewidth": 2
+    },
+    {
+      "type": "graph",
+      "title": "Error Rate",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "rate(http_requests_total{job=\"monitoringdemo\", status!~\"2..\"}[1m])",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 12
+      },
+      "options": {
+        "legend": { "displayMode": "list" },
+        "tooltip": { "mode": "single" }
+      },
+      "lines": true,
+      "fill": 1,
+      "linewidth": 2
+    },
+    {
+      "type": "graph",
+      "title": "Average Response Time",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "rate(http_request_duration_seconds_sum{job=\"monitoringdemo\"}[1m]) / rate(http_request_duration_seconds_count{job=\"monitoringdemo\"}[1m])",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "options": {
+        "legend": { "displayMode": "list" },
+        "tooltip": { "mode": "single" }
+      },
+      "lines": true,
+      "fill": 1,
+      "linewidth": 2,
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        }
+      }
+    },
+    {
+      "type": "stat",
+      "title": "Custom Requests",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "monitoringdemo_custom_requests_total",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 24
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "gray",
+                "value": null
+              },
+              {
+                "color": "blue",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "type": "graph",
+      "title": "Processing Time (Histogram)",
+      "datasource": "Prometheus",
+      "targets": [
+        {
+          "expr": "rate(monitoringdemo_processing_seconds_sum[1m]) / rate(monitoringdemo_processing_seconds_count[1m])",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 28
+      },
+      "options": {
+        "legend": { "displayMode": "list" },
+        "tooltip": { "mode": "single" }
+      },
+      "lines": true,
+      "fill": 1,
+      "linewidth": 2,
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        }
+      }
+    }
+  ]
+}
