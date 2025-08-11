@@ -8,11 +8,24 @@ MONITORING STACK (Prometheus + Grafana + Loki)
 
 **package**
  dotnet add package prometheus-net.AspNetCore
+
+ 
+ 
  dotnet add package Serilog.AspNetCore
+ 
+ 
  dotnet add package Serilog.Sinks.Grafana.Loki
+ 
+ 
  dotnet add package OpenTelemetry
+ 
+  
   dotnet add package OpenTelemetry.Exporter.Prometheus
+ 
+ 
  dotnet add package OpenTelemetry.Exporter.Prometheus  --prerelease
+
+
 dotnet add package Serilog.Sinks.Grafana.Loki
 
 2. START SERVICES/ run
